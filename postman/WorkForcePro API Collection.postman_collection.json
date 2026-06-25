@@ -1,0 +1,696 @@
+{
+  "info": {
+    "_postman_id": "493ce2fa-d462-4dc2-9f0b-ba0018a8d3f9",
+    "name": "WorkForcePro API Collection",
+    "description": "API test collection for WorkForcePro Employee Training Management System.\n\nObjective  \nAPI test collection created for the WorkForcePro QA Assignment.\n\nAssumptions:\n\n- No actual API server provided.\n    \n- Endpoints are created based on assignment requirements.\n    \n- Request and response schemas are assumed.\n    \n\n**Covered Scenarios**\n\nEmployee API  \n\\- Create Employee  \n\\- Get Employee  \n\\- Duplicate Email Validation  \n\\- Missing Employee ID Validation  \n\\- Update Employee  \n\\- Delete Employee\n\nTraining API  \n_- Assign Training  \n\\- Complete Training  \n\\- Approve Training  \n\\- Invalid Training ID  \n\\- Approve Non-Completed Training  \n\\- Complete Unassigned Training\n\nBusiness Rules Validated  \n\\- Employee must have a unique email.  \n\\- Employee ID is mandatory.  \n\\- Training must be assigned before completion.  \n\\- Training must be completed before approval.  \n\\- Invalid training IDs are rejected.  \n\\- Appropriate success and error status codes are returned.  \n\\- API response time validation included where applicable.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "56172758",
+    "_collection_link": "https://go.postman.co/collection/56172758-493ce2fa-d462-4dc2-9f0b-ba0018a8d3f9?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Employee API",
+      "item": [
+        {
+          "name": "EMP-001 Create Employee",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Expected status code\", function () {",
+                  "    pm.expect(pm.response.code).to.eql(201);",
+                  "});",
+                  "",
+                  "pm.test(\"Response time less than 1000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                  "});",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "    pm.expect(",
+                  "        pm.response.headers.get(\"Content-Type\")",
+                  "    ).to.include(\"application/json\");",
+                  "});",
+                  "",
+                  "/*",
+                  "Expected additional validations:",
+                  "",
+                  "- Response body schema validation",
+                  "- Employee data verification",
+                  "- Content-Type verification",
+                  "- Employee ID generation validation",
+                  "",
+                  "These validations require a runnable API endpoint,",
+                  "which was not given on assignment",
+                  "*/"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Ramesh Kumar\",\n  \"employeeId\": \"EMP001\",\n  \"email\": \"ramesh@test.com\",\n  \"department\": \"QA\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/employees",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "employees"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "EMP-002 Get Employee",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Expected status code 200\", function () {",
+                  "    pm.expect(pm.response.code).to.eql(200);",
+                  "});",
+                  "pm.test(\"Employee response contains required fields\", function () {",
+                  "",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property(\"employeeId\");",
+                  "    pm.expect(response).to.have.property(\"name\");",
+                  "    pm.expect(response).to.have.property(\"email\");",
+                  "",
+                  "});",
+                  "",
+                  "pm.test(\"Response time less than 1000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "    pm.expect(",
+                  "        pm.response.headers.get(\"Content-Type\")",
+                  "    ).to.include(\"application/json\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/employees/{{employeeId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "employees",
+                "{{employeeId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "EMP-003 Duplicate Email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Duplicate email rejected\", function () {",
+                  "    pm.expect(pm.response.code).to.eql(400);",
+                  "});",
+                  "// Expected: Email already exists",
+                  "pm.test(\"Correct validation message returned\", function () {",
+                  "",
+                  "    const response = pm.response.json();",
+                  "",
+                  "    pm.expect(response.message)",
+                  "        .to.include(\"already exists\");",
+                  "",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Duplicate User\",\n  \"employeeId\": \"EMP002\",\n  \"email\": \"ramesh@test.com\",\n  \"department\": \"QA\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/employees",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "employees"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "EMP-004-Missing Employee Id",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Missing employee ID validation\", function () {",
+                  "    pm.expect(pm.response.code).to.eql(400);",
+                  "});",
+                  "// Expected: employeeId is required",
+                  "pm.test(\"Employee ID is required\", function () {",
+                  "",
+                  "    const response = pm.response.json();",
+                  "",
+                  "    pm.expect(response.message)",
+                  "        .to.include(\"employeeId\");",
+                  "",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Ramesh Kumar\",\n  \"email\": \"ramesh@test.com\",\n  \"department\": \"QA\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/employees",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "employees"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "EMP-005- Update Employee",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Employee updated\", function () {",
+                  "    pm.expect(pm.response.code).to.eql(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response time less than 1000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                  "});",
+                  "",
+                  "/*",
+                  "Expected validation:",
+                  "",
+                  "const response = pm.response.json();",
+                  "",
+                  "pm.expect(response.department)",
+                  "    .to.eql(\"Engineering\");",
+                  "",
+                  "Requires actual API response.",
+                  "*/"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"department\": \"Engineering\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/employees/{{employeeId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "employees",
+                "{{employeeId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "EMP-006 Delete Employee",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Employee deleted\", function () {",
+                  "    pm.expect(pm.response.code).to.eql(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response time less than 1000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"department\": \"Engineering\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/employees/{{employeeId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "employees",
+                "{{employeeId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Training API",
+      "item": [
+        {
+          "name": "OJT-001-Assign Training",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Training assigned\", function () {",
+                  "    pm.expect(pm.response.code).to.eql(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response time less than 1000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employeeId\": \"EMP001\",\n  \"trainingId\": \"TR001\",\n  \"trainingName\": \"Forklift Safety\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/trainings/assign",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trainings",
+                "assign"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "OJT-002- Complete Training",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Training completed\", function () {",
+                  "    pm.expect(pm.response.code).to.eql(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response time less than 1000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                  "});",
+                  "",
+                  "/*",
+                  "Expected validation:",
+                  "",
+                  "const response = pm.response.json();",
+                  "",
+                  "pm.expect(response.status)",
+                  "    .to.eql(\"Completed\");",
+                  "*/"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employeeId\": \"EMP001\",\n  \"trainingId\": \"TR001\",\n  \"completionDate\": \"2026-06-25\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/trainings/complete",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trainings",
+                "complete"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "OJT-003- Approve Training",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Training approved\", function () {",
+                  "    pm.expect(pm.response.code).to.eql(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response time less than 1000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                  "});",
+                  "",
+                  "/*",
+                  "Expected validation:",
+                  "",
+                  "const response = pm.response.json();",
+                  "",
+                  "pm.expect(response.status)",
+                  "    .to.eql(\"Approved\");",
+                  "*/"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employeeId\": \"EMP001\",\n  \"trainingId\": \"TR001\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/trainings/approve",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trainings",
+                "approve"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "OJT-004 Invalid Training Id",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Invalid training ID rejected\", function () {",
+                  "    pm.expect(pm.response.code).to.eql(400);",
+                  "});",
+                  "",
+                  "/*",
+                  "Expected validation:",
+                  "",
+                  "const response = pm.response.json();",
+                  "",
+                  "pm.expect(response.message)",
+                  "    .to.include(\"training\");",
+                  "",
+                  "Expected:",
+                  "\"Training not found\"",
+                  "*/"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employeeId\": \"EMP001\",\n  \"trainingId\": \"\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/trainings/assign",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trainings",
+                "assign"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "OJT-005 Approve Not Completed Training",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"approve non-completed training is rejected\", function () {",
+                  "    pm.expect(pm.response.code).to.eql(400);",
+                  "});",
+                  "// Expected: Training must be completed before approval",
+                  "pm.test(\"Training must be completed before approval\", function () {",
+                  "",
+                  "    const response = pm.response.json();",
+                  "",
+                  "    pm.expect(response.message)",
+                  "      .to.include(\"completed\");",
+                  "",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employeeId\": \"EMP001\",\n  \"trainingId\": \"TR002\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/trainings/approve",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trainings",
+                "approve"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "OJT-006 Complete Unassigned Training",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"EComplete unassigned training is rejected\", function () {",
+                  "    pm.expect(pm.response.code).to.eql(400);",
+                  "});",
+                  "// Expected: Training must be assigned before completion",
+                  "",
+                  "pm.test(\"Error message should indicate training is not assigned\", function () {",
+                  "",
+                  "    const response = pm.response.json();",
+                  "",
+                  "    pm.expect(response.message)",
+                  "      .to.include(\"assigned\");",
+                  "",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employeeId\": \"EMP001\",\n  \"trainingId\": \"TR999\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/trainings/complete",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trainings",
+                "complete"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
