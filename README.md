@@ -2,17 +2,9 @@
 
 ## Overview
 
-This repository contains my submission for the **WorkForcePro Software QA Engineer Take-Home Assignment**.
+This repository contains my submission for the **WorkForcePro - Take-Home Assignment**.
 
 The assignment demonstrates my approach to manual testing, test planning, defect reporting, automation testing, API testing, SQL validation, accessibility testing, and QA documentation.
-
----
-**Note:** Live API endpoints were not provided as part of the assignment. Therefore, the Postman collection was prepared based on the documented requirements and was not executed.
-
-**AI Assistance Disclosure:** 
-This assignment was completed with the assistance of AI tools, including ChatGPT and Claude, to support brainstorming, documentation refinement, and review of deliverables.
-
-All technical decisions, test design, automation implementation, SQL queries, API test collection, and final validation were reviewed, verified, and completed by me.
 
 ---
 
