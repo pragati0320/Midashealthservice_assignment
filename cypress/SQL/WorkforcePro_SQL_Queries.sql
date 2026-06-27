@@ -1,6 +1,6 @@
 # WorkForcePro_SQL_Queries.sql
 
-## 1. Return all employees and their departments
+-- 1. Return all employees and their departments
 
 SELECT
     employee_id,
@@ -9,7 +9,7 @@ SELECT
     department
 FROM employees;
 
-## 2. Return employees who have completed all assigned trainings
+-- 2. Return employees who have completed all assigned trainings
 
 SELECT
     e.employee_id,
@@ -22,7 +22,7 @@ WHERE NOT EXISTS (
       AND et.status <> 'Completed'
 );
 
-## 3. Count trainings per employee
+-- 3. Count trainings per employee
 
 SELECT
     e.employee_id,
@@ -36,7 +36,7 @@ GROUP BY
     e.name
 ORDER BY total_trainings DESC;
 
-## 4. Certifications expiring within 30 days
+-- 4. Certifications expiring within 30 days
 SELECT
     e.employee_id,
     e.name,
@@ -50,7 +50,7 @@ BETWEEN CURRENT_DATE
 AND CURRENT_DATE + INTERVAL '30 DAY'
 ORDER BY c.expiry_date;
 
-## 5. Employees with overdue trainings
+-- 5. Employees with overdue trainings
 
 SELECT DISTINCT
     e.employee_id,
@@ -60,7 +60,7 @@ JOIN employee_trainings et
     ON e.id = et.employee_id
 WHERE et.status <> 'Completed';
 
-## 6. Top 5 employees by completed trainings
+-- 6. Top 5 employees by completed trainings
 
 SELECT
     e.employee_id,
