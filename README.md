@@ -64,7 +64,7 @@ The following deliverables are included:
 
 # Automation Framework
 
-The UI automation framework is created using:
+The UI automation task is completed using:
 
 * Cypress
 * JavaScript
