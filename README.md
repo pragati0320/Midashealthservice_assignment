@@ -58,13 +58,13 @@ The following deliverables are included:
 * SQL Queries
 * Cypress Project
 * Accessibility Test Report
-* Rails Console Investigation (Bonus)
+* Rails Console Investigation (Optional)
 
 ---
 
 # Automation Framework
 
-The UI automation framework is developed using:
+The UI automation framework is created using:
 
 * Cypress
 * JavaScript
@@ -86,7 +86,7 @@ The UI automation framework is developed using:
 
 # API Testing
 
-API testing was designed using Postman.
+API testing was created using Postman.
 
 The collection includes validations for:
 
@@ -110,7 +110,6 @@ SQL queries were created to validate:
 * Overdue Trainings
 * Top 5 Employees by Completed Trainings
 
-Query explanations are included in the documentation.
 
 ---
 
