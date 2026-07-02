@@ -1,3 +1,5 @@
+//duplicate check
+
 import EmployeePage from '../../pages/EmployeePage'
 
 describe('[EMP-002] Duplicate Email Validation', () => {

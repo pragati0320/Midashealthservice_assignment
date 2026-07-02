@@ -7,7 +7,6 @@ This repository contains my submission for the **WorkForcePro - Take-Home Assign
 The assignment demonstrates my approach to manual testing, test planning, defect reporting, automation testing, API testing, SQL validation, accessibility testing, and QA documentation.
 
 ---
-
 # Project Structure
 
 ```
@@ -70,7 +69,6 @@ The UI automation task is completed using:
 * JavaScript
 * Page Object Model (POM)
 * Fixtures
-* Custom Commands
 
 ### Automated Scenarios
 

@@ -11,6 +11,8 @@ FROM employees;
 
 -- 2. Return employees who have completed all assigned trainings
 
+
+
 SELECT
     e.employee_id,
     e.name
