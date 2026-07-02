@@ -158,6 +158,4 @@ npx cypress run
 
 This assignment was completed with the assistance of AI tools, including ChatGPT and Claude, to support brainstorming, documentation refinement, and review of deliverables.
 
-All technical decisions, test design, automation implementation, SQL queries, API test collection, and final validation were reviewed, verified, and completed by me. 
-
 ---
