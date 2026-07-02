@@ -6,6 +6,7 @@ describe('[OJT-001] Training Assignment', () => {
     cy.login()
   })
 
+  
   it('should assign training successfully', () => {
 
     cy.fixture('training').then((training) => {

@@ -6,7 +6,6 @@ class TrainingPage {
     cy.log(`Due Date: ${training.dueDate}`)
 
   }
-
   completeTraining() {
 
     cy.log('Training completed')

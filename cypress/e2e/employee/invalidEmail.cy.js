@@ -4,6 +4,7 @@ describe('[EMP-003] Invalid Email Validation', () => {
     cy.login()
   })
 
+  
   it('should reject invalid email format', () => {
 
     cy.fixture('invalidEmployee').then((employee) => {

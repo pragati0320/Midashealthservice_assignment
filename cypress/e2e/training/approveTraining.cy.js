@@ -7,6 +7,7 @@ describe('[OJT-005] Training Approval', () => {
     cy.login()
   })
 
+  
   it('should approve completed training successfully', () => {
 
     cy.approveTraining()

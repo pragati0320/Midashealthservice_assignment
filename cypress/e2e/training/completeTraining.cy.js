@@ -7,6 +7,7 @@ describe('[OJT-003] Training Completion', () => {
     cy.login()
   })
 
+  
   it('should complete assigned training successfully', () => {
 
     cy.completeTraining()

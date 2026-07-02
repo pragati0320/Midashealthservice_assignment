@@ -6,6 +6,7 @@ class CertificationPage {
 
   }
 
+  
 }
 
 export default new CertificationPage()

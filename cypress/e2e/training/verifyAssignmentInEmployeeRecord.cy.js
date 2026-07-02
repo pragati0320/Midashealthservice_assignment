@@ -6,6 +6,7 @@ describe('[OJT-002] Assignment Visibility', () => {
     cy.login()
   })
 
+  
   it('should display assigned training in employee record', () => {
 
     const status = TRAINING_STATUS.ASSIGNED

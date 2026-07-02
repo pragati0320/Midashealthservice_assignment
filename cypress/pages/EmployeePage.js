@@ -9,6 +9,7 @@ class EmployeePage {
 
   }
 
+  
     validateDuplicateEmail(email) {
 
     cy.log(`Duplicate Email Validation: ${email}`)

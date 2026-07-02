@@ -4,6 +4,7 @@ describe('[OJT-004] Unassigned Training Validation', () => {
     cy.login()
   })
 
+  
   it('should prevent completion of unassigned training', () => {
 
     const assigned = false

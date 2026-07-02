@@ -4,6 +4,7 @@ describe('[EMP-004] Missing Employee ID Validation', () => {
     cy.login()
   })
 
+  
   it('should not allow employee creation without employee ID', () => {
 
     cy.fixture('invalidEmployee').then((employee) => {
