@@ -1,4 +1,3 @@
-//Documentation
 
 # WorkForcePro QA Assignment
 
