@@ -156,7 +156,7 @@ npx cypress run
 
 ---
 
-**AI Assistance Disclosure:** 
+**AI Assistance Support:** 
 
 This assignment was completed with the assistance of AI tools, including ChatGPT and Claude, to support brainstorming, documentation refinement, and review of deliverables.
 
